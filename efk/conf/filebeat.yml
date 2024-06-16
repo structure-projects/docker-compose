@@ -1,0 +1,28 @@
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+processors:
+- add_cloud_metadata: ~
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    /usr/share/filebeat/logs/*.log # exclude_lines: ["^DBG"]  # 在输入中排除符合正则表达式列表的那些行。
+  
+  tags: ["sys"]
+  multiline.pattern: ^\d+\-\d+\-\d+ #日志开头以“数字-数字-数字”的格式开头，不是以此开头的日志计算上一行日志
+  multiline.negate: true
+  multiline.match: after
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: true
+
+output.elasticsearch:
+  hosts: ["10.16.105.194:9200"] # IP为elasticsearchIP
+  indices:
+    - index: "sys-%{+yyyy.MM.dd}" # bms-201为了多实例区分
+      when.contains:
+        tags: "sys"  
+

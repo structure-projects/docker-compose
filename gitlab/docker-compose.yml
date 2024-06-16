@@ -1,0 +1,19 @@
+version: '3'
+services:
+    gitlab:
+      image: 'gitlab/gitlab-ce:latest'
+      container_name: 'gitlab'
+      restart: always
+      hostname: '10.16.105.194' #填写计算机名即可
+      environment:
+        TZ: 'Asia/Shanghai'
+      ports:
+        - '8080:80'        #http端口
+        - '1443:443'   #https端口
+        - '222:22'   #配置222端口转发到容器的22端口上
+      volumes:
+        - /opt/data/gitlab/etc:/etc/gitlab             #Gitlab配置文件目录
+        - /opt/data/gitlab/data:/var/opt/gitlab  #Gitlab数据目录
+        - /opt/data/gitlab/logs:/var/log/gitlab   #Gitlab日志目录
+        - /opt/data/gitlab/cert/:/home/cert/    #域名SSL证书目录
+        - /etc/localtime:/etc/localtime:ro  #同步宿主机日期时间到容器

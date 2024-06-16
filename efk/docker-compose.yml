@@ -1,0 +1,60 @@
+version: '3'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.1.1
+    container_name: efk_elasticsearch
+    privileged: true
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - /opt/data/efk/data/elasticsearch:/usr/share/elasticsearch/data #这里将elasticsearch的数据文件映射本地，以保证下次如果删除了容器还有数据
+    hostname: elasticsearch
+    restart: always
+    networks:
+      - esnet
+    ports:
+      - 9200:9200
+      - 9300:9300
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.1.1
+    container_name: efk_kibana
+    privileged: true
+    environment:
+      - elasticsearch.hosts=http://10.16.105.194:9200
+    hostname: efk_kibana
+    depends_on:
+      - elasticsearch
+    volumes:
+      - /opt/data/efk/conf/kibana.yml:/usr/share/kibana/config/kibana.yml
+    restart: always
+    networks:
+      - esnet
+    depends_on:
+      - "elasticsearch"
+    ports:
+      - "5601:5601"
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.1.1
+    container_name: efk_filebeat
+    volumes:
+      - /opt/data/efk/conf/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - /opt/data/efk/data/filebeat:/usr/share/filebeat/data
+      - /opt/data/logs:/usr/share/filebeat/logs  # 需要收集的文件路径
+    networks:
+      - esnet
+    depends_on:
+      - "elasticsearch"
+      - "kibana"
+  eshead:
+    image: containerize/elastichd:latest
+    container_name: efk_eshead
+    networks:
+      - esnet
+    ports:
+      - 9800:9800
+    depends_on:
+      - "elasticsearch"
+networks:
+  esnet:
+    driver: bridge

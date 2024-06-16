@@ -1,0 +1,21 @@
+﻿version: '3'
+services:
+  #mysql容器
+  mysql:
+    #是否跟随docker启动
+    restart: always
+    #容器名称
+    container_name: mysql
+    #镜像
+    image: mysql:8.0.20
+    #映射端口
+    ports:
+      - "3306:3306"
+    #挂载目录
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./conf/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    #环境变量
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=Aiot123456.!abc
