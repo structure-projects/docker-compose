@@ -1,41 +1,18 @@
-#!/usr/bin/env bash
+#!/bin/bash
+host=%
+password=123456
+composeVersion=1.0.1.RELEASE
+proxy=https://mirror.ghproxy.com/
+network=structure-network
+imageRepository=mysql
+imagesVersion=8.0.25
 
-echo "打印参数:$*"
-
-# 创建目录
-function createDirectory {
-mkdir -p $PWD/config && mkdir -p $PWD/data && mkdir -p $PWD/logs && mkdir -p $PWD/init.d
-}
-# 拉取编排模版文件
-function getDockerComposeTemplateFile{
-    wget https://mirror.ghproxy.com/https://raw.githubusercontent.com/structure-projects/structure-compose/1.0.1.RELEASE/mysql/docker-compose.yml -O  $PWD/docker-compose.yml
-}
-# 拉取数据库初始sql
-function getDataInitSql{
-    wget https://mirror.ghproxy.com/https://raw.githubusercontent.com/structure-projects/structure-compose/1.0.1.RELEASE/mysql/master.sql -O ./init.d/init.sql
-}
-
-# 替换参数
-function replace{
- sed -i s/"REPLACE_HOST"/"$1"/g $PWD/docker-compose.yml && sed -i s/"REPLACE_PASSWORD"/"$2"/g $PWD/docker-compose.yml
-}
-
-# 执行部署命令
-function deployUp{
-    docker-compose -f $PWD/docker-compose.yml up -d
-}
-
-#判断传参
-if [ $# -ne 2 ]
-    then
-        echo '这个脚本需要传递两个参数第一个参数是用于配置root账户host，第二个是root账户的初始密码'
-        exit
-    else
-        createDirectory
-        getDataInitSql
-        getDockerComposeTemplateFile
-        deployUp
-        exit
-fi
+mkdir -p $PWD/config && mkdir -p $PWD/data && mkdir -p $PWD/logs && mkdir -p $PWD/init.d;
+wget ${proxy}https://raw.githubusercontent.com/structure-projects/docker-compose/${composeVersion}/mysql/master.sql -O ./init.d/init.sql;
+wget ${proxy}https://raw.githubusercontent.com/structure-projects/docker-compose/${composeVersion}/mysql/docker-compose.yml -O $PWD/docker-compose.yml;
+sed -i s/"REPLACE_HOST"/"${host}"/g $PWD/docker-compose.yml && sed -i s/"REPLACE_PASSWORD"/"${password}"/g $PWD/docker-compose.yml;
+sed -i s/"IMAGE_REPOSITORY"/"${imageRepository}"/g $PWD/docker-compose.yml && sed -i s/"IMAGE_VERSION"/"${imagesVersion}"/g $PWD/docker-compose.yml;
+sed -i s/"REPLACE_NETWORK"/"${network}"/g $PWD/docker-compose.yml;
+docker-compose -f $PWD/docker-compose.yml up -d;
 
 

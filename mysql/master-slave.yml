@@ -8,8 +8,8 @@ services:
     user: root
     restart: always
     environment:
-    - MYSQL_ROOT_HOST=%
-    - MYSQL_ROOT_PASSWORD=isoftstone
+    - MYSQL_ROOT_HOST= REPLACE_HOST
+    - MYSQL_ROOT_PASSWORD= REPLACE_PASSWORD
     - TZ=Asia/Shanghai
     volumes:
     - ./data/mysql-n1/db:/var/lib/mysql
@@ -44,8 +44,8 @@ services:
     user: root
     restart: always
     environment:
-    - MYSQL_ROOT_HOST=%
-    - MYSQL_ROOT_PASSWORD=isoftstone
+    - MYSQL_ROOT_HOST= REPLACE_HOST
+    - MYSQL_ROOT_PASSWORD= REPLACE_PASSWORD
     - TZ=Asia/Shanghai
     volumes:
     - ./data/mysql-n2/db:/var/lib/mysql
@@ -82,8 +82,8 @@ services:
     user: root
     restart: always
     environment:
-    - MYSQL_ROOT_HOST=%
-    - MYSQL_ROOT_PASSWORD=isoftstone
+    - MYSQL_ROOT_HOST= REPLACE_HOST
+    - MYSQL_ROOT_PASSWORD= REPLACE_PASSWORD
     - TZ=Asia/Shanghai
     volumes:
     - ./data/mysql-n3/db:/var/lib/mysql
