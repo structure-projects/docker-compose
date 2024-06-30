@@ -7,15 +7,33 @@ services:
     #容器名称
     container_name: mysql
     #镜像
-    image: mysql:8.0.20
+    image: mysql:8.0.30
     #映射端口
     ports:
       - "3306:3306"
     #挂载目录
     volumes:
       - ./data:/var/lib/mysql
-      - ./conf/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+      - ./logs:/var/log/mysql/
+      - ./init.d:/docker-entrypoint-initdb.d/:ro
+      - ./config:/etc/mysql/conf.d/:rw
     #环境变量
     environment:
+      - MYSQL_ROOT_HOST= REPLACE_HOST
+      - MYSQL_ROOT_PASSWORD= REPLACE_PASSWORD
       - TZ=Asia/Shanghai
-      - MYSQL_ROOT_PASSWORD=Aiot123456.!abc
+    command:
+    - "--server-id=1"
+    - "--default-authentication-plugin=mysql_native_password"
+    - "--character-set-server=utf8mb4"
+    - "--max_connections=16384"
+    - "--collation-server=utf8mb4_general_ci"
+    - "--explicit_defaults_for_timestamp=true"
+    - "--lower_case_table_names=1"
+    - "--binlog-ignore-db=mysql"
+    - "--binlog_format=row"
+    - "--log-bin=mysql-bin"
+    - "--sync_binlog=1"
+    - "--expire_logs_days=7"
+    - "--slave_skip_errors=1062"
+    - "--sql_mode=STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION"
