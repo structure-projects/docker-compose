@@ -41,5 +41,4 @@ services:
     - REPLACE_NETWORK
 networks:
   REPLACE_NETWORK:
-    driver: overlay
-    external: true
+    driver: bridge
