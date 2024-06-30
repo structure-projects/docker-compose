@@ -1,18 +1,6 @@
 #!/usr/bin/env bash
 
-echo $*
-#判断传参
-if [ $# -ne 2 ]
-    then
-        echo '这个脚本需要传递两个参数第一个参数是用于配置root账户host，第二个是root账户的初始密码'
-        exit
-    else
-        createDirectory
-        getDataInitSql
-        getDockerComposeTemplateFile
-        deployUp
-        exit
-fi
+echo "打印参数:$*"
 
 # 创建目录
 function createDirectory {
@@ -37,6 +25,17 @@ function deployUp{
     docker-compose -f $PWD/docker-compose.yml up -d
 }
 
-
+#判断传参
+if [ $# -ne 2 ]
+    then
+        echo '这个脚本需要传递两个参数第一个参数是用于配置root账户host，第二个是root账户的初始密码'
+        exit
+    else
+        createDirectory
+        getDataInitSql
+        getDockerComposeTemplateFile
+        deployUp
+        exit
+fi
 
 
