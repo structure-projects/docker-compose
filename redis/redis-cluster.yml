@@ -11,6 +11,7 @@ services:
     command:
       - "redis-server"
       - "--appendonly yes"
+      - "--requirepass PASSWORD"
       - "--masterauth PASSWORD"
       - "--daemonize no"
       - "--cluster-enabled yes"
@@ -36,6 +37,7 @@ services:
     command:
       - "redis-server"
       - "--appendonly yes"
+      - "--requirepass PASSWORD"
       - "--masterauth PASSWORD"
       - "--daemonize no"
       - "--cluster-enabled yes"
@@ -61,6 +63,7 @@ services:
     command:
       - "redis-server"
       - "--appendonly yes"
+      - "--requirepass PASSWORD"
       - "--masterauth PASSWORD"
       - "--daemonize no"
       - "--cluster-enabled yes"
@@ -86,6 +89,7 @@ services:
     command:
       - "redis-server"
       - "--appendonly yes"
+      - "--requirepass PASSWORD"
       - "--masterauth PASSWORD"
       - "--daemonize no"
       - "--cluster-enabled yes"
@@ -111,6 +115,7 @@ services:
     command:
       - "redis-server"
       - "--appendonly yes"
+      - "--requirepass PASSWORD"
       - "--masterauth PASSWORD"
       - "--daemonize no"
       - "--cluster-enabled yes"
@@ -136,6 +141,7 @@ services:
     command:
       - "redis-server"
       - "--appendonly yes"
+      - "--requirepass PASSWORD"
       - "--masterauth PASSWORD"
       - "--daemonize no"
       - "--cluster-enabled yes"
@@ -149,7 +155,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
     networks:
-      - edge-gateway-work
+      - redis-cluster-net
 networks:
-  edge-gateway-work:
+  redis-cluster-net:
     driver: bridge
