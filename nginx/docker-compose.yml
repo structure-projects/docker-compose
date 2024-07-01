@@ -5,7 +5,7 @@ services:
     #是否跟随docker启动
     restart: always
     #容器名称
-    container_name: aiot-nginx
+    container_name: nginx
     #镜像
     image: nginx:alpine
     #映射端口

@@ -14,7 +14,12 @@ services:
       - 15692:15692
       - 25672:25672
     environment:
-      RABBITMQ_DEFAULT_VHOST: '/'
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: isoftstone
-
+      RABBITMQ_DEFAULT_VHOST: 'VHOST'
+      RABBITMQ_DEFAULT_USER: USER
+      RABBITMQ_DEFAULT_PASS: PASSWORD
+    networks:
+    - {NETWORK}
+networks:
+  {NETWORK}:
+    driver: overlay
+    external: true

@@ -11,9 +11,6 @@ services:
       POSTGRES_PASSWORD: kong
     ports:
       - "5432:5432"
-#######################
-# 执行数据库迁移
-######################
   kong-migration:
     image: kong:latest
     command: "kong migrations bootstrap"
@@ -29,10 +26,6 @@ services:
       - kong-database #连接的是kong-database服务的
     depends_on:
       - kong-database #依赖于kong-database服务
-
-#####################
-# kong gateway
-#####################
   kong:
     image: kong:latest
     restart: always
@@ -72,7 +65,6 @@ services:
     depends_on:
       - kong        #依赖kong服务
       - kong-database #依赖kong-database服务
-
   konga:
     image: pantsel/konga:latest
     restart: always

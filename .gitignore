@@ -52,7 +52,6 @@ nbdist/
 .nb-gradle/
 *.lst
 
-*.iml
 
 ### local dev config file
 application-local.yml
