@@ -1,0 +1,18 @@
+# 编辑docker-compose.yml文件
+version: '3'
+services:
+  postgres:
+    image: postgres:12.3
+    restart: always
+    container_name: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - /opt/postgres/postgresql:/var/lib/postgresql
+      - /opt/postgres/data:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      TZ: Asia/Shanghai
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+      POSTGRES_DB: sonar
