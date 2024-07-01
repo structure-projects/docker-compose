@@ -7,7 +7,7 @@ services:
     #容器名称
     container_name: mysql
     #镜像
-    image: IMAGE_REPOSITORY:IMAGE_VERSION
+    image: REPLACE_IMAGE
     #映射端口
     ports:
       - "3306:3306"

@@ -1,8 +1,9 @@
 version: '3'
 services:
   mysql-master:
-    image: IMAGE_REPOSITORY:IMAGE_VERSION
+    image: REPLACE_IMAGE
     hostname: mysql-master
+    container_name: mysql-master
     ports:
     - 3306:3306
     restart: always
@@ -31,15 +32,11 @@ services:
     - "--slave_skip_errors=1062"
     - "--sql_mode=STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION"
     networks:
-    - edge-gateway-work
-    deploy:
-      placement:
-        constraints:
-        - node.hostname == dockerMaster
-        - node.role == manager
+    - mysql-net
   mysql-slave:
-    image: IMAGE_REPOSITORY:IMAGE_VERSION
+    image: REPLACE_IMAGE
     hostname: mysql-slave
+    container_name: mysql-slave
     restart: always
     environment:
     - MYSQL_ROOT_HOST= REPLACE_HOST
@@ -68,10 +65,9 @@ services:
     depends_on:
     - mysql-master
     networks:
-    - edge-gateway-work
+    - mysql-net
 networks:
-  edge-gateway-work:
-    driver: overlay
-    external: true
+  mysql-net:
+    driver: bridge
 
 
