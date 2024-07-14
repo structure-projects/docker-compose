@@ -2,7 +2,7 @@ version: '3'
 services:
   nacos-0:
     hostname: nacos-0.nacos
-    image: REPLACE_IMAGE
+    image: nacos/nacos-server:2.0.3
     ports:
       - 8848:8848
     environment:
@@ -25,7 +25,7 @@ services:
       - nacos-work
   nacos-1:
     hostname: nacos-1.nacos
-    image: REPLACE_IMAGE
+    image: nacos/nacos-server:2.0.3
     environment:
       - PREFER_HOST_MODE=hostname
       - EMBEDDED_STORAGE=embedded
@@ -46,7 +46,7 @@ services:
       - nacos-work
   nacos-2:
     hostname: nacos-2.nacos
-    image: REPLACE_IMAGE
+    image: nacos/nacos-server:2.0.3
     environment:
       - PREFER_HOST_MODE=hostname
       - EMBEDDED_STORAGE=embedded
