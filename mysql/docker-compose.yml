@@ -19,8 +19,8 @@ services:
       - ./config:/etc/mysql/conf.d/:rw
     #环境变量
     environment:
-      - MYSQL_ROOT_HOST= REPLACE_HOST
-      - MYSQL_ROOT_PASSWORD= REPLACE_PASSWORD
+      - MYSQL_ROOT_HOST=REPLACE_HOST
+      - MYSQL_ROOT_PASSWORD=REPLACE_PASSWORD
       - TZ=Asia/Shanghai
     command:
     - "--server-id=1"

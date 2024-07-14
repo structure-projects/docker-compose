@@ -8,8 +8,8 @@ services:
     - 3306:3306
     restart: always
     environment:
-    - MYSQL_ROOT_HOST= REPLACE_HOST
-    - MYSQL_ROOT_PASSWORD= REPLACE_PASSWORD
+    - MYSQL_ROOT_HOST=REPLACE_HOST
+    - MYSQL_ROOT_PASSWORD=REPLACE_PASSWORD
     - TZ=Asia/Shanghai
     volumes:
     - ./mysql-master/data:/var/lib/mysql

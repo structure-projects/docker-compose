@@ -1,0 +1,71 @@
+version: '3'
+services:
+  nacos-0:
+    hostname: nacos-0.nacos
+    image: REPLACE_IMAGE
+    ports:
+      - 8848:8848
+    environment:
+      - PREFER_HOST_MODE=hostname
+      - EMBEDDED_STORAGE=embedded
+      - NACOS_SERVERS=nacos-0.nacos:8848 nacos-1.nacos:8848 nacos-2.nacos:8848
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=DB_HOST
+      - MYSQL_SERVICE_DB_NAME=nacos_config
+      - MYSQL_SERVICE_PORT=DB_PORT
+      - MYSQL_SERVICE_USER=DB_USER
+      - MYSQL_SERVICE_PASSWORD=DB_PASSWORD
+      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+      - TIME_ZONE=Asia/Shanghai
+    volumes:
+      - ./nacos-0/logs:/home/nacos/logs
+      - ./nacos-0/data:/home/nacos/data
+    restart: always
+    networks:
+      - nacos-work
+  nacos-1:
+    hostname: nacos-1.nacos
+    image: REPLACE_IMAGE
+    environment:
+      - PREFER_HOST_MODE=hostname
+      - EMBEDDED_STORAGE=embedded
+      - NACOS_SERVERS=nacos-0.nacos:8848 nacos-1.nacos:8848 nacos-2.nacos:8848
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=DB_HOST
+      - MYSQL_SERVICE_DB_NAME=nacos_config
+      - MYSQL_SERVICE_PORT=DB_PORT
+      - MYSQL_SERVICE_USER=DB_USER
+      - MYSQL_SERVICE_PASSWORD=DB_PASSWORD
+      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+      - TIME_ZONE=Asia/Shanghai
+    volumes:
+      - ./nacos-1/logs:/home/nacos/logs
+      - ./nacos-1/data:/home/nacos/data
+    restart: always
+    networks:
+      - nacos-work
+  nacos-2:
+    hostname: nacos-2.nacos
+    image: REPLACE_IMAGE
+    environment:
+      - PREFER_HOST_MODE=hostname
+      - EMBEDDED_STORAGE=embedded
+      - NACOS_SERVERS=nacos-0.nacos:8848 nacos-1.nacos:8848 nacos-2.nacos:8848
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=DB_HOST
+      - MYSQL_SERVICE_DB_NAME=nacos_config
+      - MYSQL_SERVICE_PORT=DB_PORT
+      - MYSQL_SERVICE_USER=DB_USER
+      - MYSQL_SERVICE_PASSWORD=DB_PASSWORD
+      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+      - TIME_ZONE=Asia/Shanghai
+    volumes:
+      - ./nacos-2/logs:/home/nacos/logs
+      - ./nacos-2/data:/home/nacos/data
+    restart: always
+    networks:
+      - nacos-work
+networks:
+  nacos-work:
+    driver: overlay
+    external: true
