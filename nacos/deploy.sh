@@ -48,7 +48,7 @@ if [ -z "$repository" ]; then
     echo "replace the repository default!";
     repository=https://raw.githubusercontent.com/structure-projects/docker-compose;
 fi
-echo "Output execution parameter host=$host password=$password version=$version proxy=$proxy image=$image repository=$repository";
+echo "Output execution parameter host=$host port=$port user=$user password=$password version=$version proxy=$proxy image=$image repository=$repository";
 echo "make directory";
 mkdir -p $PWD/logs && mkdir -p $PWD/data;
 curl ${proxy}${repository}/${version}/nacos/docker-compose.yml -o $PWD/docker-compose.yml;
@@ -56,8 +56,6 @@ echo "Replace the host, password, and image of the docker-compose file";
 
 sed -i s/"DB_HOST"/"${host}"/g $PWD/docker-compose.yml && sed -i s/"DB_USER"/"${user}"/g $PWD/docker-compose.yml;
 sed -i s/"DB_PORT"/"${port}"/g $PWD/docker-compose.yml && sed -i s/"DB_PASSWORD"/"${password}"/g $PWD/docker-compose.yml;
-
-sed -i s/"REPLACE_IMAGE"/"${image}"/g $PWD/docker-compose.yml;
 
 docker-compose -f $PWD/docker-compose.yml up -d;
 
