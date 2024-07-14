@@ -22,7 +22,7 @@ if [ -z "$host" ]; then
 fi
 if [ -z "$user" ]; then
     echo "replace the user default!";
-    $user=root;
+    user='root';
 fi
 if [ -z "$password" ]; then
     echo "replace the password default!";
